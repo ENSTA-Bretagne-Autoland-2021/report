@@ -1,0 +1,19 @@
+\section{Asservissement de l'UAV}
+
+Les équations dynamiques définissant l’évolution d’un quadrotor sont connues. C’est pourquoi il est facile de simuler le comportement de ce robot. 
+Nous choisirons ici de commander le drone sans se préoccuper de sa dynamique, 
+c'est-à-dire que l’on va le contrôler en s’inspirant de la manière dont un pilote pourrait le faire.
+
+
+On va donc devoir implémenter un contrôleur, qui en connaissant une position voulue pour le drone et sa position actuelle, 
+va trouver les commandes à lui appliquer afin de l'amener dans cet état souhaité. Cette méthode de type (PID) présente 
+l’avantage de ne pas avoir besoin de manipuler les équations d’état d’un quadrotor qui peuvent être compliquées, 
+bien que connues, afin d’établir les commandes à lui appliquer. On aurait pu à ce titre utiliser une méthode de bouclage linéarisant. 
+On verra que les résultats produits par notre méthode sont tout de même satisfaisants.
+
+
+
+Nous devons donner à notre PID un vecteur vitesse désiré. 
+Ce vecteur vitesse est calculé en phase d’approche par la méthode des potentiels artificiels. 
+Il s’agit d’une analogie avec l’électromagnétisme. On considère la position souhaitée comme une charge électrique fictive 
+produisant un champ électrique dans son voisinage nommé 
