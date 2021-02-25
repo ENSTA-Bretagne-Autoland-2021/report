@@ -7,7 +7,7 @@ Cependant, pour des question de temps de travail dus à la réalisation matérie
 
 Il nous a donc fallu étudier les différents supports mobiles disponibles à l’ENSTA Bretagne permettant d’embarquer une plateforme d'atterrissage. Le support mobile en question devait aussi être capable de se déplacer de manière stable pour faciliter l’accouplement avec le drone et devait être pilotable à distance ou capable de réaliser une trajectoire de manière autonome.
 
-Pour compléter tous ces critères nous nous sommes orientés vers un robot déjà pris en main par le passé. Il s’agit du robot nommé Saturne, utilisé pour un précédent projet de recherche et cartographie magnétique d’un environnement plat, MagMap [3]. Ce robot a été, en grande partie, fabriqué au sein de l’ENSTA Bretagne, sa conception et le matériel qu’il embarque sont connus et donc plus facile à maîtriser.
+Pour compléter tous ces critères nous nous sommes orientés vers un robot déjà pris en main par le passé. Il s’agit du robot nommé Saturne, utilisé pour un précédent projet de recherche et cartographie magnétique d’un environnement plat, MagMap \cite{magmap}. Ce robot a été, en grande partie, fabriqué au sein de l’ENSTA Bretagne, sa conception et le matériel qu’il embarque sont connus et donc plus facile à maîtriser.
 
 Ce robot à 4 roues se compose de deux parties indépendantes.
 L’une contenant les éléments purement mécaniques du système tels que les moteurs, les contrôleurs de puissance, les batteries, les roues et une antenne radio pour réceptionner les commandes de pilotage à distance.
@@ -19,9 +19,9 @@ Caractéristiques techniques de Saturne :
     \item 3 batteries LiPo 6S (3h d’autonomie estimée)
     \item Télécommande radio (prioritaire)
     \item GNSS compatible RTK
-    \item Cartes de commande Roboteq (avec mesure de tension et d’intensité)
-    \item PC embarqué Intel NUC (OS Ubuntu 18.04)
-    \item LiDAR Velodyne Puck Lite
+    \item Cartes de commande Roboteq (avec mesure de tension et d’intensité) \cite{roboteq}
+    \item PC embarqué Intel NUC (OS Ubuntu 18.04) \cite{nuc}
+    \item LiDAR Velodyne Puck Lite \cite{velodyne}
     \item Caméra IP
 \end{itemize}
 
@@ -36,7 +36,7 @@ Saturne est un robot initialement conçu pour tracter une charge au bout d’une
 
 \begin{figure}[H]
     \centering\includegraphics[width=150mm]{images/ugv/ugv1.jpg}
-    \caption{Robot Saturne repris du projet MagMap}
+    \caption{Robot Saturne repris du projet MagMap \cite{magmap}}
 \end{figure}
 
 Nous avons donc dû concevoir une plateforme afin que Saturne puisse compléter son rôle de base d’appui. Etant donné sa fonction première nous avions d’abord pensé à lui faire tracter une remorque embarquant la plateforme d’atterrissage. Seulement pour des raisons pratiques, la mise en place d’une telle solution engendrerait une complexité de calcul supplémentaire du fait de l’articulation qui sépare la plateforme des capteurs utiles aux estimations des valeurs cinématiques.
