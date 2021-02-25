@@ -5,7 +5,7 @@
 
     Une autre solution qui semble intéressante est d’utiliser le docking visuel. L’idée est d’utiliser des caméras qui sont des capteurs aujourd’hui peu coûteux et qui fournissent beaucoup d’informations sur la scène. Le docking visuel est donc basé sur l’utilisation de ces capteurs afin d’acquérir la position des robots dans le repère monde. Pour cela, deux techniques peuvent être mises en œuvre : une technique en caméra fixe dans le repère monde et une technique avec des caméras embarquées sur les robots.
 
-    Ces solutions à base de caméra pour réaliser du docking sont déjà utilisées dans l’industrie. La société Forssea Robotics a développé et commercialisé une caméra capable de réaliser cette tâche, appelée Navcam. Elle permet de localiser des marqueurs dans une scène et de renvoyer des repères associés à ces marqueurs. On est donc capable d’avoir la position et aussi l’orientation des robots si on dispose ces marqueurs sur nos robots. Ces caméras possèdent l’avantage d’être complètement étanches et elles peuvent résister à des pressions importantes. Cela leur permet d’être embarquées sur des robots sous-marins pouvant aller jusqu’à 3000 mètres de profondeur (ROVs ou AUV). La \textsc{Figure}~\ref{fig:navcam} nous montre cette caméra.
+    Ces solutions à base de caméra pour réaliser du docking sont déjà utilisées dans l’industrie. La société Forssea Robotics a développé et commercialisé une caméra capable de réaliser cette tâche, appelée Navcam~\cite{forssea}. Elle permet de localiser des marqueurs dans une scène et de renvoyer des repères associés à ces marqueurs. On est donc capable d’avoir la position et aussi l’orientation des robots si on dispose ces marqueurs sur nos robots. Ces caméras possèdent l’avantage d’être complètement étanches et elles peuvent résister à des pressions importantes. Cela leur permet d’être embarquées sur des robots sous-marins pouvant aller jusqu’à 3000 mètres de profondeur (ROVs ou AUV). La \textsc{Figure}~\ref{fig:navcam} nous montre cette caméra.
 
     \begin{figure}[!htb]
         \centering
@@ -52,11 +52,11 @@
 
     L’embarquement de la caméra sur l’UAV est une solution qui pallie les éventuels problèmes de reflets sur l’image captée, mais il faut être en mesure de transporter la caméra sans déstabiliser le drone, mais aussi être en mesure de l’alimenter. C’est quelque chose qui n’est pas facilement faisable avec la Navcam de Forssea Robotics, car elle pèse plus de 3 kg et a besoin d’être alimentée par une batterie fournissant 24 volts. Trouver un drone permettant de transporter une telle charge utile n’est pas aisé, mais le piloter en toute sécurité et avoir les permissions l’est encore moins. C’est pourquoi, bien que la solution industrielle semble tout à fait intéressante, elle n’en reste pas moins inadaptée à notre application. Il faut en outre prévoir un ordinateur embarqué qui possède un port ethernet afin d'y interfacer la Navcam.
 
-    Une idée qui permet de résoudre notre problème est d’utiliser la caméra embarquée sur la plupart des drones commerciaux et la librairie open-source d’ArUco. Étant dans un environnement moins contraint que pour des drones sous-marins, dont la visibilité n’est pas toujours bonne, cette solution semble suffire à détecter des marqueurs classiques de la bibliothèque ArUco et à obtenir leur position dans le repère de l’UAV. Au passage, il n’y a désormais besoin que d’avoir un marqueur sur l’UGV, et nous obtenons une position relative d’un robot par rapport à un autre ; nous nous sommes affranchis du repère monde, et l’implémentation devrait fonctionner peu importe l’endroit dans le monde.
+    Une idée qui permet de résoudre notre problème est d’utiliser la caméra embarquée sur la plupart des drones commerciaux et la librairie open-source d’ArUco~\cite{kurosu2018human, campilho2018image}. Étant dans un environnement moins contraint que pour des drones sous-marins, dont la visibilité n’est pas toujours bonne, cette solution semble suffire à détecter des marqueurs classiques de la bibliothèque ArUco et à obtenir leur position dans le repère de l’UAV. Au passage, il n’y a désormais besoin que d’avoir un marqueur sur l’UGV, et nous obtenons une position relative d’un robot par rapport à un autre ; nous nous sommes affranchis du repère monde, et l’implémentation devrait fonctionner peu importe l’endroit dans le monde.
 
-    L’idée est donc dans un premier temps de calibrer la caméra afin de disposer de ses paramètres intrinsèques. Ces paramètres permettent de déterminer à la fois les paramètres intrinsèques linéaires, c’est à dire la distance focale, les paramètres d'échelle et les paramètres de centrage de l’axe optique, mais aussi les paramètres intrinsèques non-linéaires de distorsion liés aux imperfections de l’objectif. La librairie OpenCV\footnote{\url{https://opencv.org}} propose une procédure de calibration basée sur l’algorithme de Levenberg-Marquardt\footnote{\url{https://docs.opencv.org/master/d3/d6d/classcv_1_1LMSolver.html}}. Cela permet de pouvoir calculer les coordonnées d’un point dans le repère caméra en fonction des coordonnées du pixel capté dans l’image.
+    L’idée est donc dans un premier temps de calibrer la caméra afin de disposer de ses paramètres intrinsèques~\cite{corke2017robotics}. Ces paramètres permettent de déterminer à la fois les paramètres intrinsèques linéaires, c’est à dire la distance focale, les paramètres d'échelle et les paramètres de centrage de l’axe optique, mais aussi les paramètres intrinsèques non-linéaires de distorsion liés aux imperfections de l’objectif. La librairie OpenCV\footnote{\url{https://opencv.org}} propose une procédure de calibration basée sur l’algorithme de Levenberg-Marquardt\footnote{\url{https://docs.opencv.org/master/d3/d6d/classcv_1_1LMSolver.html}}~\cite{kurosu2018human, corke2017robotics}. Cela permet de pouvoir calculer les coordonnées d’un point dans le repère caméra en fonction des coordonnées du pixel capté dans l’image.
 
-    Pour calibrer la caméra, il suffit de capturer un certain nombre d'images d’une mire de calibration qui ici est un échiquier, dont on connaît précisément les dimensions. Un nœud ROS est développé sur la base de la librairie OpenCV et permet de réaliser cette action avec une interface graphique, comme le montre la \textsc{Figure}~\ref{fig:checkerboard}. On obtient en sortie un fichier avec tous les coefficients intrinsèques de la caméra qui nous servira pour les prochaines implémentations.
+    Pour calibrer la caméra, il suffit de capturer un certain nombre d'images d’une mire de calibration qui ici est un échiquier, dont on connaît précisément les dimensions~\cite{corke2017robotics}. Un nœud ROS est développé sur la base de la librairie OpenCV et permet de réaliser cette action avec une interface graphique, comme le montre la \textsc{Figure}~\ref{fig:checkerboard}. On obtient en sortie un fichier avec tous les coefficients intrinsèques de la caméra qui nous servira pour les prochaines implémentations.
 
     \begin{figure}[!htb]
         \centering
@@ -65,7 +65,7 @@
         \label{fig:checkerboard}
     \end{figure}
 
-    Ensuite, un nœud ROS est disponible afin de réaliser le traitement d’image et de détecter les marqueurs dans la scène. Il fournit en sortie, si la caméra est calibrée, les coordonnées des repères associés aux marqueurs et nous permet donc de déterminer la position de l’UGV dans le repère de l’UAV, comme le montre la \textsc{Figure}~\ref{fig:detection}.
+    Ensuite, un nœud ROS est disponible afin de réaliser le traitement d’image et de détecter les marqueurs dans la scène. C'est le nœud \textit{aruco\_detect}\footnote{\url{http://wiki.ros.org/aruco_detect}}. Il fournit en sortie, si la caméra est calibrée, les coordonnées des repères associés aux marqueurs et nous permet donc de déterminer la position de l’UGV dans le repère de l’UAV, comme le montre la \textsc{Figure}~\ref{fig:detection}.
 
     \begin{figure}[!htb]
         \centering
@@ -114,14 +114,14 @@
             \centering
             \includegraphics[width=\textwidth]{./vision_3d/positions.png}
             \caption{Positions estimées de l'UGV dans le repère de l'UAV}
-            \label{fig:plateforme}
+            \label{fig:position}
         \end{subfigure}
         \hfill
         \begin{subfigure}[b]{0.45\textwidth}
             \centering
             \includegraphics[width=\textwidth]{./vision_3d/angles.png}
             \caption{Angles d'Euler estimés de l'UGV dans le repère de l'UAV}
-            \label{fig:ugv}
+            \label{fig:angle}
         \end{subfigure}
         \caption{Positionnement du repère de l'UGV dans le repère de l'UAV}
         \label{fig:results}
