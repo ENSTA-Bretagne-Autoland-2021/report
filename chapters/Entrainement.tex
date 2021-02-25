@@ -16,7 +16,7 @@ Nous avons donc dû utiliser un algorithme spécifique appelé DDPG.
 
 \subsection{DDPG (Deep Deterministic Policy Gradient)}
 Le Deep Deterministic Policy Gradient (DDPG) est un algorithme off-policy model-free pour l'apprentissage d'actions continues.
-Il est expliqué de façon exhaustive dans l’aticle[4].
+Il est expliqué de façon exhaustive dans l’aticle \cite{pmlr-v48-mniha16}.
 Il combine les idées de DPG (Deterministic Policy Gradient) et de DQN (Deep Q-Network). 
 
 \begin{figure}[H]
@@ -50,3 +50,4 @@ Petit à petit le target network met à jour sa vision de l’environnement et s
 Cela retarde l’entraînement mais permet de le stabiliser. En effet, l’un des problèmes les plus récurent en deep reinforcement learning est lorsque l’actor trouve une policy qui ne permettra plus au critic d’apprendre et comme le critic apprend à l’acteur, on tombe dans un cercle vicieux.
 On pourrait penser qu’il suffit de diminuer la taille du learning rate de façon à ralentir l’entraînement. Ça serait une erreur.
 En effet, le fait d’utiliser un target network permet de découvrir énormément de policy possible et ensuite de sélectionner celle qui lui on permit d’obtenir le meilleur nombre de reward.
+\cite{CONT}
