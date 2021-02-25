@@ -1,4 +1,8 @@
 \section{L'API de l'UAV}
+\subsection{Choix du drone}
+
+Maintenant que nous avons un environnement de simulation qui fonctionne nous souhaiterions 
+obtenir des résultats sur des UAV réels. 
 
 Le DJI Matrix 600 est la plateforme idéale pour développer. On peut embarquer un
 ordinateur (Raspberry Pi, NVIDIA Jetson). Une API interfaçable avec ROS permet de
@@ -35,12 +39,21 @@ moins évoluées. Nous aimerions pouvoir contrôler l’UAV via un middleware co
 ROS. DJI propose deux pistes: un \textit{Windows SDK} et un Android SDK. Le \textit{Windows SDK}
 a la contrainte de la programmation en C\#, de plus ROS est nativement développé pour
 fonctionner sous Android. Nous avons donc retenu le \textit{Android SDK}, c’est une API
-fonctionnant en Java le langage de programmation d’Android. Il existe une méthode
-appelée \texttt{virtualRemote}, permettant de commander l’UAV en poussées et angles
-d’Euler.
+fonctionnant en Java le langage de programmation d’Android. Il existe une classe
+appelée \texttt{virtualRemote} \footnote{\url{https://developer.dji.com/api-reference/android-api/Components/MobileRemoteController/DJIMobileRemoteController.html}} , permettant de commander l’UAV en poussées et angles
+d’Euler grâce à des méthodes comme \texttt{setLeftStickVertical} ou \texttt{getRightStickHorizontal}  .
+
 ROS propose un package fonctionnant sur Android. Toutes les briques sont présentes
-pour ainsi connecter le ROS Master du PC au à la virtualRemote de l’API. L’architecture
-électronique est présentée dans la figure.
+pour ainsi connecter le ROS Master du PC au à la \texttt{virtualRemote} de l’API. L’architecture
+électronique est présentée dans la figure \ref{fig:architecture}.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.4\textwidth]{./api/architecture.png}
+    \caption{Architecture électronique.}
+    \label{fig:architecture}
+\end{figure}
+
 
 En nous inspirant des exemples de DJI Developer, nous avons pu construire une
 application permettant de contrôler le Phantom 4 avec des fonctions basiques.

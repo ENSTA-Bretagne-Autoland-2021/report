@@ -12,15 +12,18 @@ Nous avons utilisé 3 structures différentes :
 \subsection{ANN}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image40.png}
-    \caption{Actor}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image15.png}
-    \caption{Critic}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{./image_RL/image40.png}
+        \caption{Actor}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{./image_RL/image15.png}
+        \caption{Critic}
+    \end{subfigure}
+    \caption{Structure Actor-Critic}
 \end{figure}
 
 Comme on peut le voir, le réseau se compose principalement de deux entités.
@@ -28,22 +31,25 @@ Les denses correspondent aux layers du réseau de neurones. Chaque couche contie
 Les fonctions d’activations en rouge, représentent la fonction par laquelle passe la sortie du neurone.\cite{ANN}
 Ici on retrouve principalement 2 fonctions d’activations:
 
-Relu :
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image34.png}
-    \caption{Fonction Relu}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./image_RL/image34.png}
+        \caption{Fonction Relu}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{./image_RL/image8.png}
+        \caption{Fonction Tanh}
+    \end{subfigure}
+    \caption{Fonctions Relu et tanh}
 \end{figure}
 
 La fonction d'activation la plus utilisée de nos jours est la ReLU - Rectified Linear Unit - qui est une fonction linéaire par morceaux. Son avantage réside sur le fait qu'elle remplace toute valeur d'entrée négative par 0 et toute valeur positive par elle-même. Pour son gradient, il devient nul pour les valeurs négatives et vaut 1 pour les valeurs positives. Cette propriété est très intéressante dans la phase d'apprentissage car elle permet “d’éteindre” certains neurones et donc de permettre au réseau de se “spécialiser” dans certains domaines. De plus, cela permet de réduire significativement l'entraînement.
-Tanh:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image8.png}
-    \caption{Fonction Tanh}
-\end{figure}
 
-On utilise donc la fonction d’activation tangente hyperbolique en sortie du réseau ce qui permet d’obtenir une sortir entre -1 et 1 que l’on rescale en multipliant par les bornes physiques du système (commande maximales)
+
+On utilise donc la fonction d’activation tangente hyperbolique en sortie du réseau ce qui permet d’obtenir une sortir entre -1 et 1 que l’on peut remettre à l'échelle en multipliant par les bornes physiques du système.
 
 \subsection{RNN}
 
@@ -59,8 +65,18 @@ C’est le cas des LSTM pour Long Short Term Memory\cite{LSTM}. Ces réseaux com
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image26.png}
-    \caption{Structure LSTM}
+        \begin{subfigure}[b]{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{./image_RL/image26.png}
+            \caption{Structure LSTM}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.45\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{./image_RL/image17.png}
+            \caption{Structure Actor avec LSTM}
+        \end{subfigure}
+        \caption{Actor-Critic et LSTM}
 \end{figure}
 
 Le fonction de ces réseau est expliquée de façon exhaustive dans l’article [7].
@@ -68,12 +84,6 @@ Synthétiquement, on observe une ligne principale C qui compose la ligne tempore
 Il faut donc définir la taille de la série sur laquelle nous allons entraîner notre réseau. Nous avons utilisé des séries de 4 états.
 En sortie de la couche LSTM, on place un simple réseau de neurones pour interpréter cette sortie.
 On a donc pour l’actor la structure suivante :
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image17.png}
-    \caption{Structure Actor with LSTM}
-\end{figure}
 
 \subsection{CNN}
 
@@ -102,6 +112,6 @@ Dans notre cas on ainsi la structure suivante pour l’actor :
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{./image_RL/image21.png}
-    \caption{ Actor with CNN }
+    \includegraphics[width=0.3\textwidth]{./image_RL/image21.png}
+    \caption{ Actor avec CNN }
 \end{figure}
